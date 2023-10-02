@@ -1,0 +1,17 @@
+/*
+ * software_timer.c
+ *
+ *  Created on: Oct 2, 2023
+ *      Author: pc msi
+ */
+#include "software_timer.h"
+
+void timerRun(int timer_ID){
+	if(timer_counter[timer_ID] > 0){
+		timer_counter[timer_ID]--;
+		if(timer_counter[timer_ID] <= 0){
+			timer_flag[timer_ID] = 1;
+		}
+	}
+}
+
