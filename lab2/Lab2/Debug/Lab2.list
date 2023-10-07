@@ -708,8 +708,8 @@ int main(void)
  80005e8:	dd01      	ble.n	80005ee <main+0x86>
  80005ea:	2300      	movs	r3, #0
  80005ec:	61fb      	str	r3, [r7, #28]
-		setTimer(1, 50);
- 80005ee:	2132      	movs	r1, #50	; 0x32
+		setTimer(1, 25);
+ 80005ee:	2119      	movs	r1, #25
  80005f0:	2001      	movs	r0, #1
  80005f2:	f000 f90d 	bl	8000810 <setTimer>
 	}

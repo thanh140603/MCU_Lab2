@@ -237,7 +237,7 @@ int main(void)
 	if(timerFlag[1] == 1){
 		update7SEG(index_led++);
 		if(index_led > 3) index_led = 0;
-		setTimer(1, 50);
+		setTimer(1, 25);
 	}
 	if(timerFlag[2] == 1){
 	  HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
