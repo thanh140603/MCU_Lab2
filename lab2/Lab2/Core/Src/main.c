@@ -185,11 +185,12 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
   setTimer(0,100);
-  setTimer(1, 50);
+  setTimer(1, 25);
   setTimer(2, 100);
+  setTimer(3, 100);
   const int MAX_LED = 4;
   int index_led = 0;
-  int led_buffer [4] = {1 , 2 , 3 , 4};
+  int led_buffer [4] = {1 , 5 , 0 , 8};
   void update7SEG (int index) {
 	  display7SEG(led_buffer[index]);
 	  switch (index){
@@ -221,6 +222,13 @@ int main(void)
 		  break;
 	  }
   };
+	int hour = 15, minute = 8, second = 50;
+	void updateClockBuffer(){
+		led_buffer[0] = hour / 10;
+		led_buffer[1] = hour % 10;
+		led_buffer[2] = minute / 10;
+		led_buffer[3] = minute % 10;
+	}
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -242,6 +250,20 @@ int main(void)
 	if(timerFlag[2] == 1){
 	  HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
 	  setTimer(2, 100);
+	}
+	if(timerFlag[3] == 1){
+		second++;
+		if(second >= 60){
+		  second = 0;
+		  minute++;
+		}
+		if(minute >= 60){
+		  minute = 0;
+		  hour++;
+		}
+		if(hour >= 24) hour = 0;
+		updateClockBuffer();
+		setTimer(3, 100);
 	}
   }
   /* USER CODE END 3 */
@@ -382,6 +404,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	timerRun(0);
 	timerRun(1);
 	timerRun(2);
+	timerRun(3);
 }
 /* USER CODE END 4 */
 
