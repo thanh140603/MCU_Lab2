@@ -254,13 +254,16 @@ int main(void)
 		  if((code >> 7) & 0x01)
 			  HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, RESET);
       }
+      int initCol = 3;
       const int MAX_LED_MATRIX = 8;
       int index_led_matrix = 0;
+      int currentState = 3;
       uint8_t matrix_buffer[8] = {0x00, 0x3E, 0x48, 0x88, 0X88, 0x48, 0x3E, 0x00};
-      void updateLEDMatrix(int index_led_matrix){
+      void updateLEDMatrix(int state){
+    	  if(state < 0) return;
     	  	clearCols();
       		clearRows();
-      	switch(index_led_matrix){
+      	switch(state){
       		case 0:
       			HAL_GPIO_WritePin(GPIOA, ENM0_Pin, RESET);
       			break;
@@ -327,8 +330,12 @@ int main(void)
 		setTimer(3, 100);
 	}
 	  if(timerFlag[4] == 1){
-		  updateLEDMatrix(index_led_matrix++);
+		  updateLEDMatrix(currentState++);
+		  index_led_matrix++;
 		  if(index_led_matrix >= MAX_LED_MATRIX){
+			  initCol = (initCol - 1);
+			  if(initCol == -8 ) initCol = 7;
+			  currentState = initCol;
 			  index_led_matrix = 0;
 
 		  }
